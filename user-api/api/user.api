@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info(
+	title: "NOHI-demo"
+	desc: "NOHI go-zero demo"
+	author: "nohi"
+	email: thisisnohi@163.com
+	version: 1.0
+)
+
+type (
+	UserInfoReq {
+		UserId int64 `json:"userId"`
+	}
+	UserInfoResp {
+		UserId   int64  `json:"userId"`
+		NickName string `json:"string"`
+	}
+)
+
+@server(
+	group: user
+	prefix: userapi/v1
+)
+service user-api {
+	@doc "user-api...获取用户信息"
+	@handler userInfo
+	post /user/info(UserInfoReq) returns(UserInfoResp)
+	
+	@doc "user-api...更新用户信息"
+	@handler userInfoUpdate
+	post /user/update(UserInfoReq) returns(UserInfoResp)
+}
