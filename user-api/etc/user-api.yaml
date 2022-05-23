@@ -9,3 +9,10 @@ CacheRedis:
   - Host: 10.0.0.210:26379
     Pass: '123456'
     Type: node
+
+Log:
+  ServerName: user-api
+  Model: file
+  Path: logs
+  Level: info
+  Encoding: plain

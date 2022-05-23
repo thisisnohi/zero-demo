@@ -2,12 +2,13 @@ package user
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"zero-demo/user-api/internal/svc"
 	"zero-demo/user-api/internal/types"
 	"zero-demo/user-api/model"
+
+	"github.com/pkg/errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,6 +28,11 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
+	logx.Info("this is info.........======")
+
+	if err := l.testOne(); err != nil {
+		logx.Errorf("err %+v \n", err)
+	}
 
 	m := map[int32]string{
 		1: "张三",
@@ -51,4 +57,16 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		UserId:   mikeUser.Id,
 		NickName: mikeUser.Nickname,
 	}, nil
+}
+
+func (l *UserInfoLogic) testOne() error {
+	return l.testTwo()
+}
+func (l *UserInfoLogic) testTwo() error {
+	return l.testThree()
+}
+
+func (l *UserInfoLogic) testThree() error {
+	fmt.Println("=========")
+	return errors.Wrap(errors.New("这是一个错误，请看堆栈..."), "enen")
 }

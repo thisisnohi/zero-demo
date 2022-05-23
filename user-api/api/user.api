@@ -16,11 +16,20 @@ type (
 		UserId   int64  `json:"userId"`
 		NickName string `json:"string"`
 	}
+	UserCreateReq {
+		Mobile   string `json:"mobile"`
+		Nickname string `json:"nickname"`
+	}
+	UserCreateResp {
+		Flag   bool `json:"flag"`
+		UserId int64  `json:"userId"`
+	}
 )
 
 @server(
 	group: user
 	prefix: userapi/v1
+	middleware: TestMiddleware
 )
 service user-api {
 	@doc "user-api...获取用户信息"
@@ -30,4 +39,9 @@ service user-api {
 	@doc "user-api...更新用户信息"
 	@handler userInfoUpdate
 	post /user/update(UserInfoReq) returns(UserInfoResp)
+	
+	@doc "新增用户"
+	@handler userCreate
+	post /user/create(UserCreateReq) returns (UserCreateResp)
+	
 }

@@ -26,6 +26,7 @@ var (
 
 type (
 	mikeUserDataModel interface {
+		TransInsert(ctx context.Context, session sqlx.Session, data *MikeUserData) (sql.Result, error)
 		Insert(ctx context.Context, data *MikeUserData) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*MikeUserData, error)
 		Update(ctx context.Context, data *MikeUserData) error
@@ -38,11 +39,11 @@ type (
 	}
 
 	MikeUserData struct {
-		Id         int64          `db:"id"`
-		UserId     int64          `db:"user_id"`
-		Data       sql.NullString `db:"data"`
-		CreateTime time.Time      `db:"create_time"`
-		UpdateTime time.Time      `db:"update_time"`
+		Id         int64     `db:"id"`
+		UserId     int64     `db:"user_id"`
+		Data       string    `db:"data"`
+		CreateTime time.Time `db:"create_time"`
+		UpdateTime time.Time `db:"update_time"`
 	}
 )
 
@@ -51,6 +52,15 @@ func newMikeUserDataModel(conn sqlx.SqlConn, c cache.CacheConf) *defaultMikeUser
 		CachedConn: sqlc.NewConn(conn, c),
 		table:      "`mike_user_data`",
 	}
+}
+
+func (m *defaultMikeUserDataModel) TransInsert(ctx context.Context, session sqlx.Session, data *MikeUserData) (sql.Result, error) {
+	goZeroMikeUserDataIdKey := fmt.Sprintf("%s%v", cacheGoZeroMikeUserDataIdPrefix, data.Id)
+	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?)", m.table, mikeUserDataRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.Id, data.UserId, data.Data)
+	}, goZeroMikeUserDataIdKey)
+	return ret, err
 }
 
 func (m *defaultMikeUserDataModel) Insert(ctx context.Context, data *MikeUserData) (sql.Result, error) {

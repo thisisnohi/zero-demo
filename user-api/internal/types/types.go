@@ -9,3 +9,13 @@ type UserInfoResp struct {
 	UserId   int64  `json:"userId"`
 	NickName string `json:"string"`
 }
+
+type UserCreateReq struct {
+	Mobile   string `json:"mobile"`
+	Nickname string `json:"nickname"`
+}
+
+type UserCreateResp struct {
+	Flag   bool `json:"flag"`
+	UserId int64  `json:"userId"`
+}
