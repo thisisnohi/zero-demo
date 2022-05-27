@@ -4,11 +4,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/pkg/errors"
 	"zero-demo/user-api/internal/svc"
 	"zero-demo/user-api/internal/types"
-	"zero-demo/user-api/model"
-
-	"github.com/pkg/errors"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -44,19 +42,23 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		nickname = name
 	}
 	fmt.Println("NickName:", nickname)
-
-	mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, req.UserId)
-	if err != nil && err != model.ErrNotFound {
-		return nil, errors.New("查询失败")
-	}
-	if mikeUser == nil {
-		return nil, errors.New("用户不存在")
-	}
-
 	return &types.UserInfoResp{
-		UserId:   mikeUser.Id,
-		NickName: mikeUser.Nickname,
+		UserId:   req.UserId,
+		NickName: nickname,
 	}, nil
+
+	//mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, req.UserId)
+	//if err != nil && err != model.ErrNotFound {
+	//	return nil, errors.New("查询失败")
+	//}
+	//if mikeUser == nil {
+	//	return nil, errors.New("用户不存在")
+	//}
+	//
+	//return &types.UserInfoResp{
+	//	UserId:   mikeUser.Id,
+	//	NickName: mikeUser.Nickname,
+	//}, nil
 }
 
 func (l *UserInfoLogic) testOne() error {
