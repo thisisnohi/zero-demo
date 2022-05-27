@@ -16,3 +16,6 @@
 
 /.vscode/
 /.idea/
+/tmp/
+/user-api/tmp/
+/user-rpc/tmp/

@@ -26,8 +26,8 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
 	m := map[int32]string{
-		1: "张三",
-		2: "李四",
+		1: "张三RPC",
+		2: "李四RPC",
 	}
 
 	nickname := "unknown"

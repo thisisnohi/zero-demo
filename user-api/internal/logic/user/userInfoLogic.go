@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"fmt"
+	"zero-demo/user-rpc/pb"
 
 	"github.com/pkg/errors"
 	"zero-demo/user-api/internal/svc"
@@ -42,10 +43,6 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		nickname = name
 	}
 	fmt.Println("NickName:", nickname)
-	return &types.UserInfoResp{
-		UserId:   req.UserId,
-		NickName: nickname,
-	}, nil
 
 	//mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, req.UserId)
 	//if err != nil && err != model.ErrNotFound {
@@ -59,6 +56,24 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 	//	UserId:   mikeUser.Id,
 	//	NickName: mikeUser.Nickname,
 	//}, nil
+
+	//// rpc
+	fmt.Println("============rpc===============")
+	userResp, err := l.svcCtx.UserRpcClient.GetUserInfo(l.ctx, &pb.GetUserInfoReq{
+		Id: req.UserId,
+	})
+	fmt.Println("============rpc end ===============", userResp)
+	if err != nil {
+		fmt.Println("==== error =====")
+		return nil, err
+	}
+	fmt.Println("===> 结束，返回", userResp.Id, "  n1:", userResp.Nickname, "  n2:", userResp.Nickname)
+
+	return &types.UserInfoResp{
+		UserId:   req.UserId,
+		NickName: nickname + "===" + userResp.Nickname,
+	}, nil
+
 }
 
 func (l *UserInfoLogic) testOne() error {
