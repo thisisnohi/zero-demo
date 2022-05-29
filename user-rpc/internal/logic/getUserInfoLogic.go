@@ -3,6 +3,8 @@ package logic
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/metadata"
+	"net/url"
 
 	"zero-demo/user-rpc/internal/svc"
 	"zero-demo/user-rpc/pb"
@@ -25,6 +27,16 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
+
+	if md, ok := metadata.FromIncomingContext(l.ctx); ok {
+		tmp := md.Get("username")
+		if len(tmp) > 0 {
+			str, _ := url.QueryUnescape(tmp[0])
+			fmt.Printf("GetUserInfo.metadata ==>%+v\n", str)
+		}
+		fmt.Printf("GetUserInfo.metadata ==> %+v", tmp)
+	}
+
 	m := map[int32]string{
 		1: "张三RPC",
 		2: "李四RPC",
