@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 	"fmt"
+	"zero-demo/user-api/model"
 	"zero-demo/user-rpc/pb"
 
 	"github.com/pkg/errors"
@@ -44,18 +45,18 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 	}
 	fmt.Println("NickName:", nickname)
 
-	//mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, req.UserId)
-	//if err != nil && err != model.ErrNotFound {
-	//	return nil, errors.New("查询失败")
-	//}
-	//if mikeUser == nil {
-	//	return nil, errors.New("用户不存在")
-	//}
-	//
-	//return &types.UserInfoResp{
-	//	UserId:   mikeUser.Id,
-	//	NickName: mikeUser.Nickname,
-	//}, nil
+	mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, req.UserId)
+	if err != nil && err != model.ErrNotFound {
+		return nil, errors.New("查询失败")
+	}
+	if mikeUser == nil {
+		return nil, errors.New("用户不存在")
+	}
+
+	return &types.UserInfoResp{
+		UserId:   mikeUser.Id,
+		NickName: mikeUser.Nickname,
+	}, nil
 
 	//// rpc
 	fmt.Println("============rpc===============")

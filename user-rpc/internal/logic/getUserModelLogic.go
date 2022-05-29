@@ -2,7 +2,9 @@ package logic
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"zero-demo/user-rpc/model"
 
 	"zero-demo/user-rpc/internal/svc"
 	"zero-demo/user-rpc/pb"
@@ -35,9 +37,21 @@ func (l *GetUserModelLogic) GetUserModel(in *pb.GetUserModelReq) (*pb.GetUserMod
 		nickname = name
 	}
 	fmt.Println("NickName:", nickname)
+
+	mikeUser, err := l.svcCtx.MikeUserModel.FindOne(l.ctx, in.Id)
+	fmt.Println("===============1==================")
+	fmt.Println(mikeUser)
+	fmt.Println("===============2==================")
+	if err != nil && err != model.ErrNotFound {
+		return nil, errors.New("查询失败")
+	}
+	if mikeUser == nil {
+		return nil, errors.New("用户不存在")
+	}
+
 	return &pb.GetUserModelResp{
 		Id:       in.Id,
-		Nickname: nickname,
+		Nickname: nickname + ":db:" + mikeUser.Nickname,
 		UserModel: &pb.UserModel{
 			UserId:   in.Id,
 			Nickname: nickname + "11111",
