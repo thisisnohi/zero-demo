@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 
@@ -35,6 +36,16 @@ func main() {
 	})
 	defer s.Stop()
 
+	s.AddUnaryInterceptors(TestRpcIntercepter)
+
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
+}
+
+func TestRpcIntercepter(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
+	fmt.Println("TestRpcIntercepter ==> start")
+	fmt.Printf("TestRpcIntercepter ==> req %+v \n", req)
+	resp, err = handler(ctx, req)
+	fmt.Println("TestRpcIntercepter ==> end")
+	return resp, err
 }
