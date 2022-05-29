@@ -26,3 +26,8 @@ func (s *UsercenterServer) GetUserInfo(ctx context.Context, in *pb.GetUserInfoRe
 	l := logic.NewGetUserInfoLogic(ctx, s.svcCtx)
 	return l.GetUserInfo(in)
 }
+
+func (s *UsercenterServer) GetUserModel(ctx context.Context, in *pb.GetUserModelReq) (*pb.GetUserModelResp, error) {
+	l := logic.NewGetUserModelLogic(ctx, s.svcCtx)
+	return l.GetUserModel(in)
+}

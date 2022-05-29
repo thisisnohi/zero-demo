@@ -1,0 +1,256 @@
+syntax = "proto3";
+
+option go_package ="./pb";
+
+package pb;
+
+// ------------------------------------ 
+// Messages
+// ------------------------------------ 
+
+//--------------------------------MIKEORDER--------------------------------
+message MIKEORDER {
+  int64 id = 1; //id
+  int64 goodsId = 2; //goodsId
+  string goodsName = 3; //goodsName
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+}
+
+message AddMIKEORDERReq {
+  int64 goodsId = 1; //goodsId
+  string goodsName = 2; //goodsName
+}
+
+message AddMIKEORDERResp {
+}
+
+message UpdateMIKEORDERReq {
+  int64 id = 1; //id
+  int64 goodsId = 2; //goodsId
+  string goodsName = 3; //goodsName
+}
+
+message UpdateMIKEORDERResp {
+}
+
+message DelMIKEORDERReq {
+  int64 id = 1; //id
+}
+
+message DelMIKEORDERResp {
+}
+
+message GetMIKEORDERByIdReq {
+  int64 id = 1; //id
+}
+
+message GetMIKEORDERByIdResp {
+  MIKEORDER mIKEORDER = 1; //mIKEORDER
+}
+
+message SearchMIKEORDERReq {
+  int64 page = 1; //page
+  int64 pageSize = 2; //pageSize
+  int64 id = 3; //id
+  int64 goodsId = 4; //goodsId
+  string goodsName = 5; //goodsName
+  int64 createTime = 6; //createTime
+  int64 updateTime = 7; //updateTime
+}
+
+message SearchMIKEORDERResp {
+  repeated MIKEORDER mIKEORDER = 1; //mIKEORDER
+}
+
+//--------------------------------MIKESTORE--------------------------------
+message MIKESTORE {
+  int64 id = 1; //id
+  int64 goodsId = 2; //goodsId
+  int64 goodsNum = 3; //goodsNum
+}
+
+message AddMIKESTOREReq {
+  int64 goodsId = 1; //goodsId
+  int64 goodsNum = 2; //goodsNum
+}
+
+message AddMIKESTOREResp {
+}
+
+message UpdateMIKESTOREReq {
+  int64 id = 1; //id
+  int64 goodsId = 2; //goodsId
+  int64 goodsNum = 3; //goodsNum
+}
+
+message UpdateMIKESTOREResp {
+}
+
+message DelMIKESTOREReq {
+  int64 id = 1; //id
+}
+
+message DelMIKESTOREResp {
+}
+
+message GetMIKESTOREByIdReq {
+  int64 id = 1; //id
+}
+
+message GetMIKESTOREByIdResp {
+  MIKESTORE mIKESTORE = 1; //mIKESTORE
+}
+
+message SearchMIKESTOREReq {
+  int64 page = 1; //page
+  int64 pageSize = 2; //pageSize
+  int64 id = 3; //id
+  int64 goodsId = 4; //goodsId
+  int64 goodsNum = 5; //goodsNum
+}
+
+message SearchMIKESTOREResp {
+  repeated MIKESTORE mIKESTORE = 1; //mIKESTORE
+}
+
+//--------------------------------MIKEUSER--------------------------------
+message MIKEUSER {
+  int64 id = 1; //id
+  string mobile = 2; //mobile
+  string nickname = 3; //nickname
+}
+
+message AddMIKEUSERReq {
+  string mobile = 1; //mobile
+  string nickname = 2; //nickname
+}
+
+message AddMIKEUSERResp {
+}
+
+message UpdateMIKEUSERReq {
+  int64 id = 1; //id
+  string mobile = 2; //mobile
+  string nickname = 3; //nickname
+}
+
+message UpdateMIKEUSERResp {
+}
+
+message DelMIKEUSERReq {
+  int64 id = 1; //id
+}
+
+message DelMIKEUSERResp {
+}
+
+message GetMIKEUSERByIdReq {
+  int64 id = 1; //id
+}
+
+message GetMIKEUSERByIdResp {
+  MIKEUSER mIKEUSER = 1; //mIKEUSER
+}
+
+message SearchMIKEUSERReq {
+  int64 page = 1; //page
+  int64 pageSize = 2; //pageSize
+  int64 id = 3; //id
+  string mobile = 4; //mobile
+  string nickname = 5; //nickname
+}
+
+message SearchMIKEUSERResp {
+  repeated MIKEUSER mIKEUSER = 1; //mIKEUSER
+}
+
+//--------------------------------mikeUserData--------------------------------
+message MikeUserData {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string data = 3; //data
+  int64 createTime = 4; //createTime
+  int64 updateTime = 5; //updateTime
+}
+
+message AddMikeUserDataReq {
+  int64 userId = 1; //userId
+  string data = 2; //data
+}
+
+message AddMikeUserDataResp {
+}
+
+message UpdateMikeUserDataReq {
+  int64 id = 1; //id
+  int64 userId = 2; //userId
+  string data = 3; //data
+}
+
+message UpdateMikeUserDataResp {
+}
+
+message DelMikeUserDataReq {
+  int64 id = 1; //id
+}
+
+message DelMikeUserDataResp {
+}
+
+message GetMikeUserDataByIdReq {
+  int64 id = 1; //id
+}
+
+message GetMikeUserDataByIdResp {
+  MikeUserData mikeUserData = 1; //mikeUserData
+}
+
+message SearchMikeUserDataReq {
+  int64 page = 1; //page
+  int64 pageSize = 2; //pageSize
+  int64 id = 3; //id
+  int64 userId = 4; //userId
+  string data = 5; //data
+  int64 createTime = 6; //createTime
+  int64 updateTime = 7; //updateTime
+}
+
+message SearchMikeUserDataResp {
+  repeated MikeUserData mikeUserData = 1; //mikeUserData
+}
+
+
+
+// ------------------------------------ 
+// Rpc Func
+// ------------------------------------ 
+
+service ordercenter{ 
+
+	 //-----------------------MIKEORDER----------------------- 
+	 rpc AddMIKEORDER(AddMIKEORDERReq) returns (AddMIKEORDERResp); 
+	 rpc UpdateMIKEORDER(UpdateMIKEORDERReq) returns (UpdateMIKEORDERResp); 
+	 rpc DelMIKEORDER(DelMIKEORDERReq) returns (DelMIKEORDERResp); 
+	 rpc GetMIKEORDERById(GetMIKEORDERByIdReq) returns (GetMIKEORDERByIdResp); 
+	 rpc SearchMIKEORDER(SearchMIKEORDERReq) returns (SearchMIKEORDERResp); 
+	 //-----------------------MIKESTORE----------------------- 
+	 rpc AddMIKESTORE(AddMIKESTOREReq) returns (AddMIKESTOREResp); 
+	 rpc UpdateMIKESTORE(UpdateMIKESTOREReq) returns (UpdateMIKESTOREResp); 
+	 rpc DelMIKESTORE(DelMIKESTOREReq) returns (DelMIKESTOREResp); 
+	 rpc GetMIKESTOREById(GetMIKESTOREByIdReq) returns (GetMIKESTOREByIdResp); 
+	 rpc SearchMIKESTORE(SearchMIKESTOREReq) returns (SearchMIKESTOREResp); 
+	 //-----------------------MIKEUSER----------------------- 
+	 rpc AddMIKEUSER(AddMIKEUSERReq) returns (AddMIKEUSERResp); 
+	 rpc UpdateMIKEUSER(UpdateMIKEUSERReq) returns (UpdateMIKEUSERResp); 
+	 rpc DelMIKEUSER(DelMIKEUSERReq) returns (DelMIKEUSERResp); 
+	 rpc GetMIKEUSERById(GetMIKEUSERByIdReq) returns (GetMIKEUSERByIdResp); 
+	 rpc SearchMIKEUSER(SearchMIKEUSERReq) returns (SearchMIKEUSERResp); 
+	 //-----------------------mikeUserData----------------------- 
+	 rpc AddMikeUserData(AddMikeUserDataReq) returns (AddMikeUserDataResp); 
+	 rpc UpdateMikeUserData(UpdateMikeUserDataReq) returns (UpdateMikeUserDataResp); 
+	 rpc DelMikeUserData(DelMikeUserDataReq) returns (DelMikeUserDataResp); 
+	 rpc GetMikeUserDataById(GetMikeUserDataByIdReq) returns (GetMikeUserDataByIdResp); 
+	 rpc SearchMikeUserData(SearchMikeUserDataReq) returns (SearchMikeUserDataResp); 
+
+}

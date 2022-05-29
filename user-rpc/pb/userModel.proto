@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+
+message UserModel {
+  int64  UserId = 1;
+  string Nickname = 2;
+}

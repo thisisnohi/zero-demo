@@ -13,11 +13,14 @@ import (
 )
 
 type (
-	GetUserInfoReq  = pb.GetUserInfoReq
-	GetUserInfoResp = pb.GetUserInfoResp
+	GetUserInfoReq   = pb.GetUserInfoReq
+	GetUserInfoResp  = pb.GetUserInfoResp
+	GetUserModelReq  = pb.GetUserModelReq
+	GetUserModelResp = pb.GetUserModelResp
 
 	Usercenter interface {
 		GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error)
+		GetUserModel(ctx context.Context, in *GetUserModelReq, opts ...grpc.CallOption) (*GetUserModelResp, error)
 	}
 
 	defaultUsercenter struct {
@@ -34,4 +37,9 @@ func NewUsercenter(cli zrpc.Client) Usercenter {
 func (m *defaultUsercenter) GetUserInfo(ctx context.Context, in *GetUserInfoReq, opts ...grpc.CallOption) (*GetUserInfoResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GetUserInfo(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserModel(ctx context.Context, in *GetUserModelReq, opts ...grpc.CallOption) (*GetUserModelResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserModel(ctx, in, opts...)
 }

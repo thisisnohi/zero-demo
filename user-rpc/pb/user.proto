@@ -4,6 +4,7 @@ option go_package = "./pb";
 
 package pb;
 
+import "userModel.proto";
 
 message GetUserInfoReq {
   int64  id = 1;
@@ -13,8 +14,18 @@ message GetUserInfoResp {
    string nickname = 2;
 }
 
+message GetUserModelReq{
+  int64 id = 1;
+}
+
+message GetUserModelResp{
+  int64 id = 1;
+  string nickname = 2;
+  pb.UserModel userModel = 3;
+}
 
 //service
 service usercenter {
   rpc GetUserInfo(GetUserInfoReq) returns(GetUserInfoResp);
+  rpc GetUserModel(GetUserModelReq) returns(GetUserModelResp);
 }

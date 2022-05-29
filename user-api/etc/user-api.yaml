@@ -17,7 +17,7 @@ CacheRedis:
     Type: node
 
 Log:
-  ServerName: user-api
+  ServerName:  user-api
   Model: file
   Path: logs
   Level: info
