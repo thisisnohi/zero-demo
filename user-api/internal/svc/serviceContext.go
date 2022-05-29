@@ -1,7 +1,10 @@
 package svc
 
 import (
+	"context"
+	"fmt"
 	"github.com/zeromicro/go-zero/zrpc"
+	"google.golang.org/grpc"
 	"zero-demo/user-api/internal/config"
 	"zero-demo/user-api/internal/middleware"
 	"zero-demo/user-api/model"
@@ -23,11 +26,21 @@ type ServiceContext struct {
 func NewServiceContext(c config.Config) *ServiceContext {
 	conn := sqlx.NewMysql(c.Mysql.DataSource)
 	return &ServiceContext{
-		Config:                c,
-		TestMiddleware:        middleware.NewTestMiddleware().Handle,
-		MikeUserModel:         model.NewMikeUserModel(conn, c.CacheRedis),
-		MikeUserDataModel:     model.NewMikeUserDataModel(conn, c.CacheRedis),
-		UserRpcClient:         usercenter.NewUsercenter(zrpc.MustNewClient(c.UserRpcConf)),
-		UserEndpointRpcClient: usercenter.NewUsercenter(zrpc.MustNewClient(c.EndpointsRpcConf)),
+		Config:            c,
+		TestMiddleware:    middleware.NewTestMiddleware().Handle,
+		MikeUserModel:     model.NewMikeUserModel(conn, c.CacheRedis),
+		MikeUserDataModel: model.NewMikeUserDataModel(conn, c.CacheRedis),
+		UserRpcClient:     usercenter.NewUsercenter(zrpc.MustNewClient(c.UserRpcConf)),
+		UserEndpointRpcClient: usercenter.NewUsercenter(zrpc.MustNewClient(c.EndpointsRpcConf, zrpc.WithUnaryClientInterceptor(func(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
+			fmt.Println("UserEndpointRpcClient.WithUnaryClientInterceptor ==> start")
+			fmt.Printf("UserEndpointRpcClient.WithUnaryClientInterceptor ==> req %+v", req)
+			err := invoker(ctx, method, req, reply, cc, opts...)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("UserEndpointRpcClient.WithUnaryClientInterceptor ==> resp %+v", reply)
+			fmt.Println("UserEndpointRpcClient.WithUnaryClientInterceptor ==> end")
+			return nil
+		}))),
 	}
 }
