@@ -8,8 +8,9 @@ import (
 
 type Config struct {
 	rest.RestConf
-	UserRpcConf zrpc.RpcClientConf
-	Mysql       struct {
+	UserRpcConf      zrpc.RpcClientConf
+	EndpointsRpcConf zrpc.RpcClientConf
+	Mysql            struct {
 		DataSource string
 	}
 	CacheRedis cache.CacheConf

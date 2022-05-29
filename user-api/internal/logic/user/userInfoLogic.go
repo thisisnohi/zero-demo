@@ -53,10 +53,10 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 		return nil, errors.New("用户不存在")
 	}
 
-	return &types.UserInfoResp{
-		UserId:   mikeUser.Id,
-		NickName: mikeUser.Nickname,
-	}, nil
+	//return &types.UserInfoResp{
+	//	UserId:   mikeUser.Id,
+	//	NickName: mikeUser.Nickname,
+	//}, nil
 
 	//// rpc
 	fmt.Println("============rpc===============")
@@ -70,9 +70,22 @@ func (l *UserInfoLogic) UserInfo(req *types.UserInfoReq) (resp *types.UserInfoRe
 	}
 	fmt.Println("===> 结束，返回", userResp.Id, "  n1:", userResp.Nickname, "  n2:", userResp.Nickname)
 
+	// endpotin rpc
+	fmt.Println("============endpotin===============")
+	userRespEndpoint, err := l.svcCtx.UserEndpointRpcClient.GetUserInfo(l.ctx, &pb.GetUserInfoReq{
+		Id: req.UserId,
+	})
+	fmt.Println("============userRespEndpoint end ===============", userRespEndpoint)
+	if err != nil {
+		fmt.Println("==== error =====")
+		return nil, err
+	}
+
+	fmt.Println("===> 结束，返回", userResp.Id, "  n1:", userResp.Nickname, "  n2:", userResp.Nickname)
+
 	return &types.UserInfoResp{
 		UserId:   req.UserId,
-		NickName: nickname + "===" + userResp.Nickname,
+		NickName: nickname + "===" + userResp.Nickname + ":userRespEndpoint:" + userRespEndpoint.Nickname,
 	}, nil
 
 }

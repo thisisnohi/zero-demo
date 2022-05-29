@@ -2,11 +2,17 @@ Name: user-api
 Host: 0.0.0.0
 Port: 8888
 
+# etcd方式连接RPC
 UserRpcConf:
   Etcd:
     Hosts:
       - 127.0.0.1:2379
     Key: user.rpc
+
+# 直联RPC服务
+EndpointsRpcConf:
+  Endpoints:
+    - 127.0.0.1:8080
 
 Mysql:
   DataSource: root:nohi1234@tcp(10.0.0.210:3306)/go_zero?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
